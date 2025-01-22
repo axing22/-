@@ -133,12 +133,21 @@ class Tetris {
         const piece = this.currentPiece;
         for (let y = 0; y < piece.shape.length; y++) {
             for (let x = 0; x < piece.shape[y].length; x++) {
-                if (piece.shape[y][x] &&
-                    (this.grid[y + piece.y] &&
-                     this.grid[y + piece.y][x + piece.x]) !== undefined &&
-                    (this.grid[y + piece.y] &&
-                     this.grid[y + piece.y][x + piece.x])) {
-                    return true;
+                if (piece.shape[y][x]) {
+                    // 检查是否到达底部
+                    if (y + piece.y >= this.gridHeight) {
+                        return true;
+                    }
+                    // 检查左右边界
+                    if (x + piece.x < 0 || x + piece.x >= this.gridWidth) {
+                        return true;
+                    }
+                    // 检查与其他方块的碰撞
+                    if (y + piece.y >= 0 && 
+                        this.grid[y + piece.y] && 
+                        this.grid[y + piece.y][x + piece.x]) {
+                        return true;
+                    }
                 }
             }
         }
